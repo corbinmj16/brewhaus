@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import BreweryList from '@/components/BreweryList.vue'
 import BrewerySearchBar from '@/components/BrewerySearchBar.vue'
-import { LoaderCircle, ChevronLeft, ChevronRight } from 'lucide-vue-next'
-import { useBreweries } from '@/composables/useBreweries'
+import { LoaderCircle } from 'lucide-vue-next'
 import { useBreweriesStore } from '@/stores/breweries'
 import { storeToRefs } from 'pinia'
-import BreweryListResult from '@/components/BreweryListResult.vue'
+import { useBreweries } from '@/composables/useBreweries'
 
-const { isLoading, handleNextPage, handlePreviousPage } = useBreweries()
+const { isLoading } = useBreweries()
 const breweriesStore = useBreweriesStore()
 const { allBreweries } = storeToRefs(breweriesStore)
 </script>
@@ -28,31 +28,27 @@ const { allBreweries } = storeToRefs(breweriesStore)
         <p class="text-zinc-500">No breweries found.</p>
       </template>
       <template v-else>
-        <div class="flex justify-center gap-4">
-          <button
-            type="button"
-            @click="handlePreviousPage"
-            class="bg-amber-500 hover:bg-amber-700 hover:cursor-pointer text-white rounded-full p-1.5"
-          >
-            <span class="sr-only">Previous Page</span>
-            <ChevronLeft />
-          </button>
-          <button
-            type="button"
-            @click="handleNextPage"
-            class="bg-amber-500 hover:bg-amber-700 hover:cursor-pointer text-white rounded-full p-1.5"
-          >
-            <span class="sr-only">Next Page</span>
-            <ChevronRight />
-          </button>
-        </div>
-
-        <ul class="flex flex-col gap-2">
-          <li v-for="brewery in allBreweries" :key="brewery.id">
-            <BreweryListResult :brewery="brewery" />
-          </li>
-        </ul>
+        <BreweryList />
       </template>
     </div>
   </section>
 </template>
+
+<!-- <div class="flex justify-center gap-4">
+  <button
+    type="button"
+    @click="handlePreviousPage"
+    class="bg-amber-500 hover:bg-amber-700 hover:cursor-pointer text-white rounded-full p-1.5"
+  >
+    <span class="sr-only">Previous Page</span>
+    <ChevronLeft />
+  </button>
+  <button
+    type="button"
+    @click="handleNextPage"
+    class="bg-amber-500 hover:bg-amber-700 hover:cursor-pointer text-white rounded-full p-1.5"
+  >
+    <span class="sr-only">Next Page</span>
+    <ChevronRight />
+  </button>
+</div> -->

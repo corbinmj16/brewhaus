@@ -10,6 +10,7 @@ const results = ref<Brewery[]>([])
 
 async function search() {
   try {
+    // const response = await fetch(`http://localhost:9000/api/breweries/search?q=${query.value}`)
     const response = await fetch(
       `https://api.openbrewerydb.org/v1/breweries/search?query=${query.value}`,
     )
@@ -22,7 +23,7 @@ async function search() {
 
 const throttledSearch = useDebounceFn(() => {
   search()
-}, 250)
+}, 275)
 </script>
 
 <template>
@@ -41,7 +42,7 @@ const throttledSearch = useDebounceFn(() => {
           placeholder="Search..."
           class="w-full outline-none border-none"
           v-model="query"
-          @input="throttledSearch"
+          @keyup="throttledSearch"
         />
         <div class="absolute right-2 top-1/2 transform -translate-y-1/2 text-zinc-400">
           <button
@@ -57,7 +58,7 @@ const throttledSearch = useDebounceFn(() => {
       </label>
 
       <div
-        v-if="query"
+        v-if="query && results.length > 0"
         class="absolute top-11 left-0 bg-white border border-zinc-200 rounded-2xl shadow-lg w-full max-h-56 overflow-y-scroll"
       >
         <ul>

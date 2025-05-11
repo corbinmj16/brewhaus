@@ -15,10 +15,6 @@ app.use(
 )
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
 app.use('/api/breweries', breweryRoutes)
 
 app.listen(port, () => {
