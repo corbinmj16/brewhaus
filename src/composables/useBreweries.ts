@@ -12,7 +12,7 @@ export function useBreweries() {
       isLoading.value = true
 
       const response = await fetch(
-        `https://api.openbrewerydb.org/v1/breweries?page=${currentPage.value}&per_page=25`,
+        `http://localhost:9000/api/breweries?page=${currentPage.value}&per_page=25`,
       )
       const data: Brewery[] = await response.json()
 

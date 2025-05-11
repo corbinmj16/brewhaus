@@ -16,7 +16,7 @@ onMounted(async () => {
   // Check if the selected brewery is already set - if not, fetch it
   if (!selectedBrewery.value) {
     try {
-      const response = await fetch(`https://api.openbrewerydb.org/v1/breweries/${id}`)
+      const response = await fetch(`https://localhost:9000/api/breweries/${id}`)
       const data = await response.json()
       breweriesStore.setSelectedBrewery(data)
     } catch (error) {
