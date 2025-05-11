@@ -1,63 +1,30 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { Brewery } from '@/types/brewery'
+import BrewerySearchBar from '@/components/BrewerySearchBar.vue'
 import { LoaderCircle, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { useBreweries } from '@/composables/useBreweries'
+import { useBreweriesStore } from '@/stores/breweries'
+import { storeToRefs } from 'pinia'
+import BreweryListResult from '@/components/BreweryListResult.vue'
 
-const isLoading = ref(false)
-const breweries = ref<Brewery[] | null>(null)
-const currentPage = ref(1)
-
-async function getBreweries() {
-  try {
-    isLoading.value = true
-
-    const response = await fetch(
-      `https://api.openbrewerydb.org/v1/breweries?page=${currentPage.value}&per_page=5`,
-    )
-    const data: Brewery[] = await response.json()
-    breweries.value = data
-  } catch (error) {
-    console.error('Error fetching breweries:', error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-function handleNextPage() {
-  currentPage.value += 1
-  getBreweries()
-}
-
-function handlePreviousPage() {
-  if (currentPage.value <= 1) return
-  currentPage.value -= 1
-  getBreweries()
-}
-
-onMounted(() => {
-  getBreweries()
-})
+const { isLoading, handleNextPage, handlePreviousPage } = useBreweries()
+const breweriesStore = useBreweriesStore()
+const { allBreweries } = storeToRefs(breweriesStore)
 </script>
 
 <template>
-  <section>
-    <h1 class="text-3xl font-bold">Find a brewery near you</h1>
-    <p class="text-zinc-500">Search by: name, city, or type.</p>
-
-    <div class="flex justify-between mt-4">
-      <input
-        type="text"
-        placeholder="Search..."
-        class="border border-zinc-200 rounded-full p-2 w-full"
-      />
-      <button class="bg-amber-500 text-white rounded-full px-4 py-2 ml-4">Search</button>
+  <section class="mt-10">
+    <div class="flex flex-col justify-center text-center">
+      <img alt="Brewhaus Logo" src="@/assets/logo.svg" class="size-18 mx-auto" />
+      <p class="text-amber-500 font-bold text-4xl">Brewhaus</p>
     </div>
+
+    <BrewerySearchBar />
 
     <div class="mt-4">
       <template v-if="isLoading">
         <LoaderCircle class="animate-spin text-amber-500" />
       </template>
-      <template v-else-if="!breweries">
+      <template v-else-if="!allBreweries">
         <p class="text-zinc-500">No breweries found.</p>
       </template>
       <template v-else>
@@ -79,11 +46,10 @@ onMounted(() => {
             <ChevronRight />
           </button>
         </div>
-        <ul class="min-h-[400px]">
-          <li v-for="brewery in breweries" :key="brewery.id">
-            <RouterLink :to="{ name: 'brewery-details', params: { id: brewery.id } }">
-              {{ brewery.name }} - {{ brewery.city }}, {{ brewery.state }}
-            </RouterLink>
+
+        <ul class="flex flex-col gap-2">
+          <li v-for="brewery in allBreweries" :key="brewery.id">
+            <BreweryListResult :brewery="brewery" />
           </li>
         </ul>
       </template>
