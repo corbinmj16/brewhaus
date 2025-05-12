@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, useTemplateRef } from 'vue'
-import { useIntersectionObserver } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { LoaderCircle } from 'lucide-vue-next'
-import BreweryListResult from '@/components/BreweryListResult.vue'
+import { useIntersectionObserver } from '@vueuse/core'
 import { useBreweriesStore } from '@/stores/breweries'
 import { useBreweriesApi } from '@/composables/useBreweriesApi'
+import BreweryListResult from '@/components/BreweryListResult.vue'
 
 const { isLoading, stopFetching, getBreweries, handleNextPage } = useBreweriesApi()
 const breweriesStore = useBreweriesStore()

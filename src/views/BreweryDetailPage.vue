@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { LoaderCircle } from 'lucide-vue-next'
-import HeaderNavigation from '@/components/HeaderNavigation.vue'
-import { useBreweriesStore } from '@/stores/breweries'
-import { useBreweriesApi } from '@/composables/useBreweriesApi'
+import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
-import { onMounted } from 'vue'
+import { LoaderCircle } from 'lucide-vue-next'
+import { useBreweriesStore } from '@/stores/breweries'
+import { useBreweriesApi } from '@/composables/useBreweriesApi'
+import HeaderNavigation from '@/components/HeaderNavigation.vue'
 
 const { isLoading, getBreweryById } = useBreweriesApi()
 const breweriesStore = useBreweriesStore()

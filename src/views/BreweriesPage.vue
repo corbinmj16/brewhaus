@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import BreweryList from '@/components/BreweryList.vue'
 import BrewerySearchBar from '@/components/BrewerySearchBar.vue'
 import { useBreweriesStore } from '@/stores/breweries'
-import { storeToRefs } from 'pinia'
 
 const breweriesStore = useBreweriesStore()
 const { allBreweries } = storeToRefs(breweriesStore)
