@@ -1,39 +1,33 @@
-# .
+# Brewhaus
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+This repo uses the Open Brewery API. It uses Vue3/Typescript for the frontend and has a Node/Express.js backend.
 
 ## Project Setup
+
+#### Install NPM dependencies
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+#### Run the frontend
 
 ```sh
 npm run dev
+
+# Running on: http://localhost:5173
 ```
 
-### Type-Check, Compile and Minify for Production
+#### Run the backend
 
 ```sh
-npm run build
+npm run server
+
+# Running on: http://localhost:9000
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Features
 
-```sh
-npm run lint
-```
+- Home page will list the first 25 breweries
+- Inifinte Scrolling: will fetch 25 more at a time
+- Search Ahead: debounced by 250ms

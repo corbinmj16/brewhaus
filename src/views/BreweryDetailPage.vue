@@ -2,30 +2,21 @@
 import { LoaderCircle } from 'lucide-vue-next'
 import HeaderNavigation from '@/components/HeaderNavigation.vue'
 import { useBreweriesStore } from '@/stores/breweries'
+import { useBreweriesApi } from '@/composables/useBreweriesApi'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 
+const { isLoading, getBreweryById } = useBreweriesApi()
 const breweriesStore = useBreweriesStore()
 const { selectedBrewery } = storeToRefs(breweriesStore)
 const route = useRoute()
 const { id } = route.params
-const isLoading = ref(true)
 
 onMounted(async () => {
   // Check if the selected brewery is already set - if not, fetch it
   if (!selectedBrewery.value) {
-    try {
-      const response = await fetch(`https://localhost:9000/api/breweries/${id}`)
-      const data = await response.json()
-      breweriesStore.setSelectedBrewery(data)
-    } catch (error) {
-      console.error('Error fetching brewery:', error)
-    } finally {
-      isLoading.value = false
-    }
-  } else {
-    isLoading.value = false
+    await getBreweryById(id as string)
   }
 })
 </script>
@@ -33,15 +24,15 @@ onMounted(async () => {
 <template>
   <HeaderNavigation />
 
-  <section v-if="!selectedBrewery && !isLoading">
+  <template v-if="!selectedBrewery && !isLoading">
     <p class="text-zinc-500">No brewery selected.</p>
 
     <RouterLink to="/" class="text-amber-500 hover:text-amber-700"> Find a brewery </RouterLink>
-  </section>
+  </template>
 
-  <section v-if="!selectedBrewery && isLoading">
+  <template v-if="!selectedBrewery && isLoading">
     <LoaderCircle class="animate-spin text-amber-500" />
-  </section>
+  </template>
 
   <section v-if="selectedBrewery">
     <h1 class="text-3xl font-bold">{{ selectedBrewery.name }}</h1>

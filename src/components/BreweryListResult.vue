@@ -24,7 +24,7 @@ function handleSelectedBrewery(brewery: Brewery) {
     @click="handleSelectedBrewery(brewery)"
     class="flex flex-col text-left group hover:text-amber-500 hover:cursor-pointer"
   >
-    {{ brewery.name }}
+    <p class="text-lg font-medium">{{ brewery.name }}</p>
     <span class="text-zinc-400 text-sm group-hover:text-amber-500">
       {{ brewery.city }}, {{ brewery.state }}
     </span>

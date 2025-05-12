@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import BreweryList from '@/components/BreweryList.vue'
 import BrewerySearchBar from '@/components/BrewerySearchBar.vue'
-import { LoaderCircle } from 'lucide-vue-next'
 import { useBreweriesStore } from '@/stores/breweries'
 import { storeToRefs } from 'pinia'
-import { useBreweries } from '@/composables/useBreweries'
 
-const { isLoading } = useBreweries()
 const breweriesStore = useBreweriesStore()
 const { allBreweries } = storeToRefs(breweriesStore)
 </script>
@@ -21,10 +18,7 @@ const { allBreweries } = storeToRefs(breweriesStore)
     <BrewerySearchBar />
 
     <div class="mt-4">
-      <template v-if="isLoading">
-        <LoaderCircle class="animate-spin text-amber-500" />
-      </template>
-      <template v-else-if="!allBreweries">
+      <template v-if="!allBreweries">
         <p class="text-zinc-500">No breweries found.</p>
       </template>
       <template v-else>
@@ -33,22 +27,3 @@ const { allBreweries } = storeToRefs(breweriesStore)
     </div>
   </section>
 </template>
-
-<!-- <div class="flex justify-center gap-4">
-  <button
-    type="button"
-    @click="handlePreviousPage"
-    class="bg-amber-500 hover:bg-amber-700 hover:cursor-pointer text-white rounded-full p-1.5"
-  >
-    <span class="sr-only">Previous Page</span>
-    <ChevronLeft />
-  </button>
-  <button
-    type="button"
-    @click="handleNextPage"
-    class="bg-amber-500 hover:bg-amber-700 hover:cursor-pointer text-white rounded-full p-1.5"
-  >
-    <span class="sr-only">Next Page</span>
-    <ChevronRight />
-  </button>
-</div> -->

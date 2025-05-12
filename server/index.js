@@ -18,5 +18,5 @@ app.use(
 app.use('/api/breweries', breweryRoutes)
 
 app.listen(port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`)
+  console.log(`Brewery backend listening on http://localhost:${port}`)
 })
